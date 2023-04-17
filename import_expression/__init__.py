@@ -82,14 +82,14 @@ def compile(
 
 _code = _typing.Union[str, _types.CodeType]
 
-def eval(source: _code, globals=None, locals=None):
+def eval(source: _code, globals=None, locals=None, filename=constants.DEFAULT_FILENAME):
 	"""evaluate Import Expression Python™ in the given globals and locals"""
 	globals, locals = _parse_eval_exec_args(globals, locals)
 	if _inspect.iscode(source):
 		return _builtins.eval(source, globals, locals)
-	return _builtins.eval(compile(source, constants.DEFAULT_FILENAME, 'eval'), globals, locals)
+	return _builtins.eval(compile(source, filename, 'eval'), globals, locals)
 
-def exec(source: _code, globals=None, locals=None):
+def exec(source: _code, globals=None, locals=None, filename=constants.DEFAULT_FILENAME):
 	"""execute Import Expression Python™ in the given globals and locals
 
 	Note: unlike :func:`exec`, the default globals are *not* the caller's globals!
@@ -99,7 +99,7 @@ def exec(source: _code, globals=None, locals=None):
 	globals, locals = _parse_eval_exec_args(globals, locals)
 	if _inspect.iscode(source):
 		return _builtins.eval(source, globals, locals)
-	_builtins.eval(compile(source, constants.DEFAULT_FILENAME, 'exec'), globals, locals)
+	_builtins.eval(compile(source, filename, 'exec'), globals, locals)
 
 def find_imports(source: str, filename=constants.DEFAULT_FILENAME, mode='exec'):
 	"""return a list of all module names required by the given source code."""
